@@ -12,7 +12,9 @@ everything. in no particular order:
   - [ ] wasteland map
     - [x] map image
     - [ ] map data
-- [ ] basic engine and main loop framework
+- [x] basic engine and main loop framework
+  - [ ] extend engine framework to parse options
+  - [ ] split mainloop into fixed process (integration) and rendering
 - [ ] basic sprite rendering framework
   - [ ] sprite data structure
   - [ ] animation system (animation params, control interface)
