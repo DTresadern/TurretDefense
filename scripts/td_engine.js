@@ -16,6 +16,7 @@
 const engine = ((env, doc) => {
 
   let render = null;
+  let asset = null;
 
   // use set for efficiency and automatic duplicate handling.
   // don't really care what order objects are processed in
@@ -33,9 +34,22 @@ const engine = ((env, doc) => {
     env.requestAnimationFrame(main);
   };
 
-  const initEngineComponents = (options) => {
+  const loadAssets = (assetPaths = []) => {
+    asset.load(assetPaths);
+  };
+
+  const initEngineComponents = (options = {}) => {
     render = new options.renderClass();
+    asset = new options.assetClass();
+
     render.init();
+    asset.init();
+  };
+
+  const start = () => {
+    if(!initialized) return;
+
+    main();
   };
 
   const init = (options = {}) => {
@@ -46,10 +60,10 @@ const engine = ((env, doc) => {
       {
         name: 'A',
         process: function() {
-          console.log(`process object ${this.name}`);
+          // console.log(`process object ${this.name}`);
         },
         draw: function() {
-          console.log(`draw object ${this.name}`);
+          // console.log(`draw object ${this.name}`);
         }
       },
     );
@@ -58,10 +72,10 @@ const engine = ((env, doc) => {
       {
         name: 'B',
         process: function() {
-          console.log(`process object ${this.name}`);
+          // console.log(`process object ${this.name}`);
         },
         draw: function() {
-          console.log(`draw object ${this.name}`);
+          // console.log(`draw object ${this.name}`);
         }
       },
     );
@@ -69,15 +83,10 @@ const engine = ((env, doc) => {
     initialized = true;
   };
 
-  const start = () => {
-    if(!initialized) return;
-
-    main();
-  };
-
   return {
     init: init,
     start: start,
+    loadAssets: loadAssets
   };
 
 })(window, document);
