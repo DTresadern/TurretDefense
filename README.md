@@ -38,7 +38,7 @@ everything. in no particular order:
 - [ ] vector3 class & helpers
 - [ ] matrix class & helpers
 - [ ] math and helpers
-- [ ] map data structure
+- [x] map data structure
 - [ ] user input handling
 - [ ] event system
 - [ ] game class for handling game logic
