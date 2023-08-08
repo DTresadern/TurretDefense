@@ -1,5 +1,6 @@
 "use strict";
 
+//import * as Maps from './td_maps.js';
 import SpriteRender from './sprite_render.js';
 import AssetManager from './asset_manager.js';
 import engine from './td_engine.js';
