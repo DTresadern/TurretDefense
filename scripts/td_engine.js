@@ -15,12 +15,17 @@
 
 const engine = ((env, doc) => {
 
+  let render = null;
+
   // use set for efficiency and automatic duplicate handling.
   // don't really care what order objects are processed in
   let initialized = false;
   let processObjects = new Set();
 
   const main = () => {
+    render.draw();
+
+    render.add([...processObjects]);
     for(const obj of processObjects) {
       obj.process();
     }
@@ -28,14 +33,37 @@ const engine = ((env, doc) => {
     env.requestAnimationFrame(main);
   };
 
+  const initEngineComponents = (options) => {
+    render = new options.renderClass();
+    render.init();
+  };
+
   const init = (options = {}) => {
+
+    initEngineComponents(options);
 
     processObjects.add(
       {
-        process: () => {
-          console.log(`processing object`);
+        name: 'A',
+        process: function() {
+          console.log(`process object ${this.name}`);
+        },
+        draw: function() {
+          console.log(`draw object ${this.name}`);
         }
-      }
+      },
+    );
+
+    processObjects.add(
+      {
+        name: 'B',
+        process: function() {
+          console.log(`process object ${this.name}`);
+        },
+        draw: function() {
+          console.log(`draw object ${this.name}`);
+        }
+      },
     );
 
     initialized = true;

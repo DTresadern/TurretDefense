@@ -15,7 +15,8 @@ everything. in no particular order:
 - [x] basic engine and main loop framework
   - [ ] extend engine framework to parse options
   - [ ] split mainloop into fixed process (integration) and rendering
-- [ ] basic sprite rendering framework
+- [x] basic sprite rendering framework
+  - [ ] actually draw something to the screen
   - [ ] sprite data structure
   - [ ] animation system (animation params, control interface)
 - [ ] vector3 class & helpers
