@@ -7,6 +7,16 @@
 
  Other modular components (coming soon!) such as renderer, input, etc will be
  modular classes so they can be instanced and swapped out as necessary
+
+ random thoughts:
+ make a better event system that can be hooked into
+ things like render, asset etc can dispatch events to engine if hooks exist
+ event hooks could be one-shot or repeating, should allow multiple hooks
+ event:
+  source - source object
+  dest - dest object
+  data - event data
+ the engine should automagically handle linking and distribution
 ///////////////////////////////////////////////////////////////////////////// */
 
 // dependencies
@@ -34,6 +44,12 @@ const engine = ((env, doc) => {
     env.requestAnimationFrame(main);
   };
 
+  const notify = (objName, eventName, callback) => {
+    const notifyObject = null;
+
+    if(objName == 'asset') asset.notify(eventName, callback);
+  };
+
   const loadAssets = (assetPaths = []) => {
     asset.load(assetPaths);
   };
@@ -48,6 +64,8 @@ const engine = ((env, doc) => {
 
   const start = () => {
     if(!initialized) return;
+
+    console.log('engine starting');
 
     main();
   };
@@ -86,7 +104,8 @@ const engine = ((env, doc) => {
   return {
     init: init,
     start: start,
-    loadAssets: loadAssets
+    loadAssets: loadAssets,
+    notify: notify
   };
 
 })(window, document);

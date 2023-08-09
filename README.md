@@ -15,6 +15,7 @@ everything. in no particular order:
     - [ ] map data
 
 - [x] basic engine and main loop framework
+  - [ ] make a better event system
   - [ ] extend engine framework to parse options
   - [ ] split mainloop into two processes: process (integration) and draw (rendering)
 
@@ -24,7 +25,7 @@ everything. in no particular order:
   - [ ] animation system (animation params, control interface)
 
 - [x] basic asset manager framework
-  - [ ] add progress and completion notifiers for engine
+  - [x] add progress and completion notifiers for engine
 
 - [ ] game objects and classes
   - [ ] moveable

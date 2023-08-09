@@ -24,9 +24,11 @@ let assets = [
   './images/tower/buzz_l1_idle.png',
   './images/tower/buzz_l2_idle.png',
   './images/tower/buzz_l3_idle.png',
-  './images/tower/gun_l1_idle.png'
 ];
 
-engine.loadAssets(assets);
+engine.notify('asset', 'loadingFinished', () => {
+  console.log('loading completed');
+  engine.start();
+});
 
-engine.start();
+engine.loadAssets(assets);
