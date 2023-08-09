@@ -18,13 +18,13 @@ const ASSET_TYPES = {
 };
 
 class AssetManager {
-  #assets = new Set();
+  #assets = new Map();
   #assetsPending = 0;
-  #assetsPendingLoaded = 0;
-  #assetsPendingFailed = 0;
-  #notifyLoad = null;
+  #assetsLoaded = 0;
+  #assetsFailed = 0;
+  #notifyLoadingProgress = null;
+  #notifyLoadingFinished = null;
   constructor() {
-    console.log(`asset manager instanced`);
   }
 
   buildAsset(assetPath, ext) {
@@ -40,6 +40,27 @@ class AssetManager {
     console.log(`dont know how to build asset type ${assetType} for ${assetPath}`);
   }
 
+  notify(notificationType, callback) {
+    if(notificationType == 'loadingProgress') this.#notifyLoadingProgress = callback;
+    if(notificationType == 'loadingFinished') this.#notifyLoadingFinished = callback;
+  }
+
+  progressUpdate(success, assetObj, assetRef, assetNum) {
+    const totalAssets = this.#assets.size;
+    if(success) {
+      this.#assetsLoaded += 1;
+    } else {
+      this.#assetsFailed += 1;
+    }
+    const completedAssets = this.#assetsLoaded;
+    const progressPercentage = (completedAssets/totalAssets)*100;
+    this.#assetsPending -= 1;
+    console.log(`asset #${assetNum+1}:${assetRef} ${success ? 'finished' : 'failed'} loading. status: ${completedAssets}/${totalAssets} (${(progressPercentage).toFixed(2)}%) ${this.#assetsFailed} failures, ${this.#assetsPending} pending.`);
+
+    if(this.#notifyLoadingProgress) this.#notifyLoadingProgress?.call(this);
+    if(this.#assetsPending <= 0) this.#notifyLoadingFinished?.call(this)
+  }
+
   load(assetPaths = []) {
     console.log(`requested to load ${assetPaths.length} assets. `, assetPaths);
     for(const assetPath of assetPaths) {
@@ -53,7 +74,13 @@ class AssetManager {
         if(!this.#assets.has(assetRef)) {
           const assetObject = this.buildAsset(assetPath, assetFiletype);
           if( assetObject) {
-            console.log(`added "${assetPath}" as: ${assetRef}`);
+            const currentAsset = this.#assets.size
+            this.#assetsPending += 1;
+            this.#assets.set(assetRef, assetObject);
+            assetObject.onload = (e) => { this.progressUpdate(true, assetObject, assetRef, currentAsset); };
+            assetObject.onerror = (e) => { this.progressUpdate(false, assetObject, assetRef, currentAsset); };
+            console.log(`added "${assetPath}" as: ${assetRef}. num assets = ${this.#assets.size}`);
+            console.log(`currentAsset is ${currentAsset}`);
           } else {
             console.log(`failed to build asset object for "${assetPath}"`);
           }
@@ -71,8 +98,9 @@ class AssetManager {
 
   }
 
-  init(options) {
-
+  init(options = {}) {
+    this.#notifyLoadingProgress = options?.notify?.progress;
+    this.#notifyLoadingFinished = options?.notify?.finished;
   }
 }
 
