@@ -27,19 +27,29 @@ const engine = ((env, doc) => {
 
   let render = null;
   let asset = null;
+  let game = null;
 
   // use set for efficiency and automatic duplicate handling.
   // don't really care what order objects are processed in
   let initialized = false;
   let processObjects = new Set();
 
-  const main = () => {
+  const draw = () => {
     render.draw();
+  };
 
+  const process = () => {
+    if(game) {
+      game.process();
+    }
     render.add([...processObjects]);
     for(const obj of processObjects) {
       obj.process();
     }
+  };
+
+  const main = () => {
+    process();
 
     env.requestAnimationFrame(main);
   };
@@ -57,9 +67,13 @@ const engine = ((env, doc) => {
   const initEngineComponents = (options = {}) => {
     render = new options.renderClass();
     asset = new options.assetClass();
+    game = new options.gameClass();
 
     render.init();
     asset.init();
+
+    // init game last
+    game.init();
   };
 
   const start = () => {

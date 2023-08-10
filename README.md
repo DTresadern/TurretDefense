@@ -27,6 +27,9 @@ everything. in no particular order:
 - [x] basic asset manager framework
   - [x] add progress and completion notifiers for engine
 
+- [x] game class framework
+  - [ ] create game states to handle game game logic
+
 - [ ] game objects and classes
   - [ ] moveable
   - [ ] static
@@ -36,12 +39,11 @@ everything. in no particular order:
   - [ ] projectile
   - [ ] particle
 
+- [x] map data structure
+- [ ] basic ui system
 - [ ] vector3 class & helpers
 - [ ] matrix class & helpers
 - [ ] math and helpers
-- [x] map data structure
 - [ ] user input handling
 - [ ] event system
-- [ ] game class for handling game logic
-- [ ] basic ui system
 - [ ] camera system and panning (maybe)
