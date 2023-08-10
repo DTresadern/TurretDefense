@@ -30,6 +30,11 @@ everything. in no particular order:
 - [x] game class framework
   - [ ] create game states to handle game game logic
 
+- [x] user input framework
+  - [ ] handle mouse input
+  - [ ] handle keyed input
+  - [ ] handle keybinding
+
 - [ ] game objects and classes
   - [ ] moveable
   - [ ] static
@@ -44,6 +49,5 @@ everything. in no particular order:
 - [ ] vector3 class & helpers
 - [ ] matrix class & helpers
 - [ ] math and helpers
-- [ ] user input handling
 - [ ] event system
 - [ ] camera system and panning (maybe)

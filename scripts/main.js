@@ -4,9 +4,11 @@
 import SpriteRender from './sprite_render.js';
 import AssetManager from './asset_manager.js';
 import TurretDefenseGame from './td_game.js';
+import InputManager from './input_manager.js';
 import engine from './td_engine.js';
 
 engine.init({
+  inputClass: InputManager,
   renderClass: SpriteRender,
   assetClass: AssetManager,
   gameClass: TurretDefenseGame,

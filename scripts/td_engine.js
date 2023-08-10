@@ -25,6 +25,7 @@
 
 const engine = ((env, doc) => {
 
+  let input = null;
   let render = null;
   let asset = null;
   let game = null;
@@ -33,6 +34,11 @@ const engine = ((env, doc) => {
   // don't really care what order objects are processed in
   let initialized = false;
   let processObjects = new Set();
+
+  const processInput = () => {
+    // input should be handled every frame, before draw and process
+    input.process();
+  };
 
   const draw = () => {
     render.draw();
@@ -49,6 +55,8 @@ const engine = ((env, doc) => {
   };
 
   const main = () => {
+    processInput();
+    draw();
     process();
 
     env.requestAnimationFrame(main);
@@ -65,14 +73,15 @@ const engine = ((env, doc) => {
   };
 
   const initEngineComponents = (options = {}) => {
+    input = new options.inputClass();
     render = new options.renderClass();
     asset = new options.assetClass();
     game = new options.gameClass();
 
+    input.init();
     render.init();
     asset.init();
 
-    // init game last
     game.init();
   };
 
