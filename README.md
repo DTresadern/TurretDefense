@@ -1,7 +1,27 @@
-## Turret Defense
+## Turret Defense JS
+
+### What is it
+It will be a tower defense game designed to run in the browser, the core gameplay will be typical of any tower defense type game.
+
+I have ideas for a few features that will (hopefully) provide a unique twist later on, but this is entirely dependent on whether i can get a playable and performant core game engine running in javascript and rendered via canvas.
+
+### Why
+I enjoy game design and have had this idea in my head for a long time, my goals here are not necessarily to create a successful game but expand on my knowledge of game flow and architecture.
+
+The major challenge here will be the fact that i am hand rolling everything from scratch, a deliberate decision to help me understand the numerous challenges involved in building a complex and realtime application in a resource-limited environment.
+
+I've had experience using numerous game engines, my current favourites have been the Unreal Engine and GoDot.
+
+If this experimental project reaches a working and fully featured state (even poorly) i plan to rebuild it in a 3D game engine, which is a more familiar environment to me.
+
+### Pics
+
+![image](https://dtresadern.github.io/TurretDefense/images/web/readme_turrets.jpg)
 
 ### To-Do List
-everything. in no particular order:
+more for my reference than anything else.
+
+TODO: everything. in no particular order:
 
 - [x] rudimentary landing page with canvas
 
