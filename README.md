@@ -15,9 +15,9 @@ everything. in no particular order:
     - [ ] map data
 
 - [x] basic engine and main loop framework
+  - [x] split mainloop into two processes: process (integration) and draw (rendering)
   - [ ] make a better event system
   - [ ] extend engine framework to parse options
-  - [ ] split mainloop into two processes: process (integration) and draw (rendering)
 
 - [x] basic sprite rendering framework
   - [ ] actually draw something to the screen
@@ -28,12 +28,25 @@ everything. in no particular order:
   - [x] add progress and completion notifiers for engine
 
 - [x] game class framework
+  - [x] timer system
+  - [ ] extend timer system to allow looping and one-shot timers
+  - [ ] maybe split timer system into a reuseable class module (toolbox?) if the need arises
   - [ ] create game states to handle game game logic
 
 - [x] user input framework
   - [ ] handle mouse input
   - [ ] handle keyed input
   - [ ] handle keybinding
+
+- [] game object and class handling
+  - [x] controlled instance spawning via BaseClass (bit fragmented, tidy up needed)
+  - [ ] allow passing options to spawned instances for more control
+  - [x] provide link to engineInterface for engine modules
+  - [x] classFactory to hold class map and allow class loading
+  - [x] class instancing via baseClass
+  - [x] extend baseClass with a few necessities
+  - [ ] make instances destroyable, engine to handle
+  - [ ] refactor base_class module into a class & instance manager
 
 - [ ] game objects and classes
   - [ ] moveable

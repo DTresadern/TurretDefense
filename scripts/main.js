@@ -1,13 +1,15 @@
 "use strict";
 
 //import * as Maps from './td_maps.js';
-import SpriteRender from './sprite_render.js';
-import AssetManager from './asset_manager.js';
-import TurretDefenseGame from './td_game.js';
-import InputManager from './input_manager.js';
-import engine from './td_engine.js';
+import SpriteRender from './engine/sprite_render.js';
+import AssetManager from './engine/asset_manager.js';
+import TurretDefenseGame from './game/td_game.js';
+import InputManager from './engine/input_manager.js';
+// import ObjectManager from './td';
+import engine from './engine/engine.js';
 
 engine.init({
+  viewport: {canvas: '#viewport', w: 1024, h: 768},
   inputClass: InputManager,
   renderClass: SpriteRender,
   assetClass: AssetManager,

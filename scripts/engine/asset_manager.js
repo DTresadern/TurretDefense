@@ -2,6 +2,7 @@
 
 /* /////////////////////////////////////////////////////////////////////////////
  Asset Manager
+ if an asset cannot be found, load in a default error image so as not to break the game completely
 ///////////////////////////////////////////////////////////////////////////// */
 
 // dependencies
@@ -32,7 +33,6 @@ class AssetManager {
     let newAsset = null;
 
     if(assetType == 'image') {
-      console.log(`building ${assetType} asset for ${assetPath}`);
       newAsset = new Image();
       newAsset.src = assetPath;
       return newAsset;
@@ -62,7 +62,7 @@ class AssetManager {
   }
 
   load(assetPaths = []) {
-    console.log(`requested to load ${assetPaths.length} assets. `, assetPaths);
+    console.log(`requested to load ${assetPaths.length} assets`);
     for(const assetPath of assetPaths) {
       if(PATH_MATCH_REGEX.test(assetPath)) {
         const [assetDir, assetFilename, assetFiletype] = assetPath.match(PATH_MATCH_REGEX).slice(1,4);
@@ -79,8 +79,8 @@ class AssetManager {
             this.#assets.set(assetRef, assetObject);
             assetObject.onload = (e) => { this.progressUpdate(true, assetObject, assetRef, currentAsset); };
             assetObject.onerror = (e) => { this.progressUpdate(false, assetObject, assetRef, currentAsset); };
-            console.log(`added "${assetPath}" as: ${assetRef}. num assets = ${this.#assets.size}`);
-            console.log(`currentAsset is ${currentAsset}`);
+            // console.log(`added "${assetPath}" as: ${assetRef}. num assets = ${this.#assets.size}`);
+            // console.log(`currentAsset is ${currentAsset}`);
           } else {
             console.log(`failed to build asset object for "${assetPath}"`);
           }

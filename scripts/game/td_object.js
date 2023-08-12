@@ -1,33 +1,24 @@
 "use strict";
 
 /* /////////////////////////////////////////////////////////////////////////////
- Input Manager
-
- use normalised coordinates for mouse in the range -1 to +1, 0 being center of screen
- allow direct binding of inputs and passive reading from input manager
+ Objects
+ register classes with classFactory if they are to be instanced
 ///////////////////////////////////////////////////////////////////////////// */
 
 // dependencies
+import {classFactory, BaseClass} from '../engine/base_class.js';
 
 ////////////////////////////////////////////////////////////////////////////////
 
-class InputManager {
-  #mouse = {x: 0, y: 0};
-  #keys = new Map();
-
-  constructor() {
-
-  }
-
-  process() {
-    console.log('process input');
-  }
-
-  init() {
-
-  }
+export class TDObject extends BaseClass {
+  doRender = true;
+  doProcess = true;
+  doSelfDraw = true;
 }
 
-////////////////////////////////////////////////////////////////////////////////
+export const testObject = classFactory.register(
+  class testObject extends TDObject {
+  }
+);
 
-export default InputManager;
+////////////////////////////////////////////////////////////////////////////////
