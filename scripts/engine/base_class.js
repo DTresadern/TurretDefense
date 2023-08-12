@@ -57,16 +57,20 @@ class Thing {
 }
 
 export class BaseClass extends Thing {
-  doRender = false;
-  doProcess = false;
-  doSelfDraw = false;
+  static engine = null;
+
   #doHibernate = false; // dont process when not visible
   #detailLevel = 1.0;
   #position = {x: 0, y: 0, z: 0};
   #sprite = null;
   #id = null;
 
-  static engine = null;
+  doRender = false;
+  doProcess = false;
+  doSelfDraw = false;
+  isDestroyed = false;
+
+  lifespan = 0;
 
   constructor() {
     super();
@@ -88,6 +92,7 @@ export class BaseClass extends Thing {
   static spawn(objectClass) {
     let objClass = null;
     let newInstance = null;
+
     if(typeof objectClass === 'string') {
       objClass = classFactory.fetch(objectClass);
     } else if(objectClass?.prototype instanceof BaseClass) {
@@ -109,11 +114,14 @@ export class BaseClass extends Thing {
   set xy(v) { [this.#position.x, this.#position.y] = [v.x, v.y]; }
 
   process(dt) {
-
   }
 
   fixedProcess(dt) {
-    // console.log(`${this.id} fixedProcess`);
+    // console.log(`fixedProcess on ${this.id} lifespan=${this.lifespan}`);
+    if(this.lifespan > 0 && (this.lifespan -= dt) <= 0) {
+      this.isDestroyed = true;
+      this.expired();
+    }
   }
 
   selfDraw(dt) {
@@ -121,6 +129,23 @@ export class BaseClass extends Thing {
 
   init() {
 
+  }
+
+  destroy() {
+    this.isDestroyed = true;
+    this.destroyed();
+  }
+
+  cleanup() {
+
+  }
+
+  destroyed() {
+
+  }
+
+  expired() {
+    console.log(`${this.id} expired`);
   }
 
   // instances need a way to communicate with the engine
