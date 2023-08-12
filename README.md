@@ -38,7 +38,7 @@ everything. in no particular order:
   - [ ] handle keyed input
   - [ ] handle keybinding
 
-- [] game object and class handling
+- [ ] game object and class handling
   - [x] controlled instance spawning via BaseClass (bit fragmented, tidy up needed)
   - [ ] allow passing options to spawned instances for more control
   - [x] provide link to engineInterface for engine modules
