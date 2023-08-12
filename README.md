@@ -65,7 +65,7 @@ TODO: everything. in no particular order:
   - [x] classFactory to hold class map and allow class loading
   - [x] class instancing via baseClass
   - [x] extend baseClass with a few necessities
-  - [ ] make instances destroyable, engine to handle
+  - [x] make instances destroyable, engine to handle
   - [ ] refactor base_class module into a class & instance manager
 
 - [ ] game objects and classes

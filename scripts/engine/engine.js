@@ -71,7 +71,7 @@ const engine = ((env, doc) => {
 
   const canProcess = (obj) => {
     if(!obj.doProcess) return false;
-    if(obj.destroyed) return false;
+    if(obj.isDestroyed) return false;
 
     return true;
   };
@@ -85,6 +85,14 @@ const engine = ((env, doc) => {
 
     // let i = 0;
     for(const obj of processObjects) {
+      if(obj.isDestroyed) {
+        const oid = obj.id;
+        obj.cleanup();
+        processObjects.delete(obj);
+        console.log(`removing ${oid} from process chain, processObjects count = ${processObjects.size}`);
+        continue;
+      }
+
       if(canDraw(obj)) {
         render.add(obj);
       }
@@ -113,7 +121,7 @@ const engine = ((env, doc) => {
       elapsedTime += deltaTimeS;
 
       if(deltaTime > 1500) {
-        console.log('deltatime anomaly detected or main loop locked');
+        console.log(`deltatime anomaly detected or main loop locked. deltaTime = ${deltaTimeS}`);
       } else {
         processInput(deltaTimeS);
         draw(deltaTimeS);
@@ -135,8 +143,8 @@ const engine = ((env, doc) => {
   };
 
   const addObject = (obj) => {
-    console.log(`${obj.id} added to process chain, processObjects count = ${processObjects.size}`);
     processObjects.add(obj);
+    console.log(`${obj.id} added to process chain, processObjects count = ${processObjects.size}`);
   };
 
   const loadAssets = (assetPaths = []) => {
