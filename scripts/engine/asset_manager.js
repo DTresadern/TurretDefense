@@ -2,7 +2,7 @@
 
 /* /////////////////////////////////////////////////////////////////////////////
  Asset Manager
- if an asset cannot be found, load in a default error image so as not to break the game completely
+ TODO: if an asset cannot be found, load in a default error image so as not to break the game completely
 ///////////////////////////////////////////////////////////////////////////// */
 
 // dependencies

@@ -7,15 +7,31 @@
     <link rel="stylesheet" href="./styles/main.css">
   </head>
   <body id="landing-page">
-    <div class="center-column">
-      <div class="header">
-        <img src="./images/web/icon.png">
-        <h1>Turret Defense</h1>
+
+    <main class="flex flex-column full_height">
+
+        <section id="section-header" class="flexi-none">
+          <h1 class="flex items-center justify-center">
+            <img src="./images/web/icon.png" class="w60 rounded-6 mr1">
+            Turret Defense
+          </h1>
+        </section>
+
+        <section id="section-content" class="flexi-auto px1">
+          <div class="center-column">
+
+            <div id="game-wrapper">
+              <canvas id="viewport" width="1024" height="576"></canvas>
+            </div>
+
+          </div>
+        </section>
+
+        <section id="section-footer" class="flexi-none text-center">
+          <p>Did it work?!</p>
+        </section>
       </div>
-      <div id="game-wrapper">
-        <canvas id="viewport" width="1024" height="576"></canvas>
-      </div>
-    </div>
+    </main>
 
     <script type="module" src="./scripts/main.js" defer></script>
   </body>
