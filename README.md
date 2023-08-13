@@ -40,7 +40,8 @@ TODO: everything. in no particular order:
   - [ ] extend engine framework to parse options
 
 - [x] basic sprite rendering framework
-  - [ ] actually draw something to the screen
+  - [x] actually draw something to the screen
+  - [ ] draw actual sprites to the screen
   - [ ] sprite data structure
   - [ ] animation system (animation params, control interface)
 

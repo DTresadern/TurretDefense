@@ -30,6 +30,10 @@ let assets = [
   './images/tower/buzz_l1_idle.png',
   './images/tower/buzz_l2_idle.png',
   './images/tower/buzz_l3_idle.png',
+
+  './images/fx/fire_ball.png',
+  './images/fx/flashb.png',
+  './images/fx/sheeld.png',
 ];
 
 engine.notify('asset', 'loadingFinished', () => {
