@@ -43,8 +43,8 @@ class TurretDefenseGame {
 
   timerEvent(name) {
     switch(name) {
-      case '4 second timer':
-        console.log(`timer '${name}' triggered`);
+      case 'testTimer':
+        // console.log(`timer '${name}' triggered`);
         BaseClass.spawn('testObject');
     }
   }
@@ -82,7 +82,7 @@ class TurretDefenseGame {
   }
 
   start() {
-    this.setTimer('4 second timer', 4.0);
+    this.setTimer('testTimer', 0.5);
   }
 
   init(engineInterface) {

@@ -64,18 +64,41 @@ export class BaseClass extends Thing {
   #position = {x: 0, y: 0, z: 0};
   #sprite = null;
   #id = null;
+  initialLifespan = 0;
+  lifespan = 0;
 
   doRender = false;
   doProcess = false;
   doSelfDraw = false;
   isDestroyed = false;
-
-  lifespan = 0;
+  hidden = true;
 
   constructor() {
     super();
+
+    // this.initialLifespan = 0;
+    // this.lifespan = 0;
+
+    // this.doRender = false;
+    // this.lifespan = this.initialLifespan;
     classFactory.assignId(this);
+    // console.log(`${this.id} instanced, lifespan=${this.lifespan}`);
   }
+  // get lifespan() {
+  //   return this.#lifespan;
+  // }
+  // get initialLifespan() {
+  //   return this.#initialLifespan;
+  // }
+  // set initialLifespan(newLifespan) {
+  //   this.#initialLifespan = newLifespan;
+  // }
+
+  // set lifespan(newLifespan) {
+  //   console.log('setting lifespan');
+  //   this.initialLifespan = newLifespan;
+  //   this.#lifespan = newLifespan;
+  // }
 
   get id() {
     return this.#id;
@@ -108,6 +131,9 @@ export class BaseClass extends Thing {
     }
   }
 
+  get x() { return this.#position.x; }
+  get y() { return this.#position.y; }
+
   set x(x) { this.#position.x = x; }
   set y(y) { this.#position.y = y; }
   set z(z) { this.#position.z = z; }
@@ -119,6 +145,7 @@ export class BaseClass extends Thing {
   fixedProcess(dt) {
     // console.log(`fixedProcess on ${this.id} lifespan=${this.lifespan}`);
     if(this.lifespan > 0 && (this.lifespan -= dt) <= 0) {
+      this.lifespan = 0;
       this.isDestroyed = true;
       this.expired();
     }
@@ -145,7 +172,7 @@ export class BaseClass extends Thing {
   }
 
   expired() {
-    console.log(`${this.id} expired`);
+    // console.log(`${this.id} expired`);
   }
 
   // instances need a way to communicate with the engine

@@ -55,7 +55,7 @@ class AssetManager {
     const completedAssets = this.#assetsLoaded;
     const progressPercentage = (completedAssets/totalAssets)*100;
     this.#assetsPending -= 1;
-    console.log(`asset #${assetNum+1}:${assetRef} ${success ? 'finished' : 'failed'} loading. status: ${completedAssets}/${totalAssets} (${(progressPercentage).toFixed(2)}%) ${this.#assetsFailed} failures, ${this.#assetsPending} pending.`);
+    console.log(`asset #${assetNum+1} => '${assetRef}' ${success ? 'finished' : 'failed'} loading. status: ${completedAssets}/${totalAssets} (${(progressPercentage).toFixed(2)}%) ${this.#assetsFailed} failures, ${this.#assetsPending} pending.`);
 
     if(this.#notifyLoadingProgress) this.#notifyLoadingProgress?.call(this);
     if(this.#assetsPending <= 0) this.#notifyLoadingFinished?.call(this)
@@ -79,7 +79,7 @@ class AssetManager {
             this.#assets.set(assetRef, assetObject);
             assetObject.onload = (e) => { this.progressUpdate(true, assetObject, assetRef, currentAsset); };
             assetObject.onerror = (e) => { this.progressUpdate(false, assetObject, assetRef, currentAsset); };
-            // console.log(`added "${assetPath}" as: ${assetRef}. num assets = ${this.#assets.size}`);
+            console.log(`added "${assetPath}" as '${assetRef}' num assets = ${this.#assets.size}`);
             // console.log(`currentAsset is ${currentAsset}`);
           } else {
             console.log(`failed to build asset object for "${assetPath}"`);
@@ -94,8 +94,13 @@ class AssetManager {
     }
   }
 
-  fetch() {
-
+  fetch(assetRef) {
+    if(!this.#assets.has(assetRef)) {
+      console.log(`invalid asset ${assetRef}`);
+      return false;
+    }
+    console.log(`found asset ${assetRef}`);
+    return this.#assets.get(assetRef);
   }
 
   init(options = {}) {

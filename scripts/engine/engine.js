@@ -41,27 +41,28 @@ const engine = ((env, doc) => {
   let processObjects = new Set();
 
   // mainloop stuff
-  const fixedProcessRate = 10
+  const fixedProcessRate = 20;
   const fixedDeltaTimeMs = int(1000 / fixedProcessRate);
   const fixedDeltaTimeS = int(1000 / fixedProcessRate) / 1000.0;
   let elapsedTime = 0;
   let processSteps = 0;
   let lastFrameTimestamp = 0;
   let frameTimeAccumulator = 0;
+  let processAlpha = 0;
 
   const processInput = (dt) => {
     input.process(dt);
   };
 
-  const draw = (dt) => {
-    render.draw(dt);
+  const draw = (dt, fa) => {
+    render.draw(dt, fa);
     game.draw(dt);
   };
 
   const canDraw = (obj) => {
     if(!obj.doRender) return false;
-    if(obj.destroyed) return false;
-    if(!obj.sprite) return false;
+    //if(obj.destroyed) return false; // shouldnt need to check this as its checked in process loop
+    // if(!obj.sprite) return false;
     if(obj.hidden) return false;
 
     if(!render.visibilityCheck(obj)) return false;
@@ -71,7 +72,7 @@ const engine = ((env, doc) => {
 
   const canProcess = (obj) => {
     if(!obj.doProcess) return false;
-    if(obj.isDestroyed) return false;
+    // if(obj.isDestroyed) return false; // shouldnt need to check this as its checked in process loop
 
     return true;
   };
@@ -86,10 +87,10 @@ const engine = ((env, doc) => {
     // let i = 0;
     for(const obj of processObjects) {
       if(obj.isDestroyed) {
-        const oid = obj.id;
+        // const oid = obj.id;
         obj.cleanup();
         processObjects.delete(obj);
-        console.log(`removing ${oid} from process chain, processObjects count = ${processObjects.size}`);
+        // console.log(`removing ${oid} from process chain, processObjects count = ${processObjects.size}`);
         continue;
       }
 
@@ -124,7 +125,9 @@ const engine = ((env, doc) => {
         console.log(`deltatime anomaly detected or main loop locked. deltaTime = ${deltaTimeS}`);
       } else {
         processInput(deltaTimeS);
-        draw(deltaTimeS);
+        draw(deltaTimeS, processAlpha);
+        // processAlpha can be used to optionally smoothly interpolate in the render even if processing is intermittent
+        processAlpha = frameTimeAccumulator / 1000.0;
         process(deltaTimeS);
 
         while(frameTimeAccumulator > fixedDeltaTimeMs) {
@@ -144,7 +147,7 @@ const engine = ((env, doc) => {
 
   const addObject = (obj) => {
     processObjects.add(obj);
-    console.log(`${obj.id} added to process chain, processObjects count = ${processObjects.size}`);
+    // console.log(`${obj.id} added to process chain, processObjects count = ${processObjects.size}`);
   };
 
   const loadAssets = (assetPaths = []) => {
@@ -155,6 +158,7 @@ const engine = ((env, doc) => {
     console.log('engine starting');
 
     game.start();
+    // render.start();
 
     lastFrameTimestamp = now();
     main();
@@ -165,30 +169,31 @@ const engine = ((env, doc) => {
     canvas.width = viewportData.w;
     canvas.height = viewportData.h;
     ctx = canvas.getContext('2d');
+    render.viewportUpdate(canvas, ctx);
   };
 
   const initEngineComponents = (options = {}) => {
-    input = new options.inputClass();
-    render = new options.renderClass();
-    asset = new options.assetClass();
-    game = new options.gameClass();
+    input = engineInterface.modules.input = new options.inputClass();
+    asset = engineInterface.modules.asset = new options.assetClass();
+    render = engineInterface.modules.render = new options.renderClass();
+    game = engineInterface.modules.game = new options.gameClass();
 
     // expose engine interface to BaseClass so objects can communicate if necessary
     BaseClass.setEngine(engineInterface);
 
     input.init(engineInterface);
-    render.init(engineInterface);
     asset.init(engineInterface);
+    render.init(engineInterface);
 
     game.init(engineInterface);
   };
 
   const init = (options = {}) => {
-    setViewport(options.viewport);
-
     initEngineComponents(options);
+    setViewport(options.viewport);
   };
 
+  // const engineInterface = (x => ({
   const engineInterface = {
     addObject: addObject,
     init: init,
@@ -196,9 +201,13 @@ const engine = ((env, doc) => {
     loadAssets: loadAssets,
     notify: notify,
     modules: {
+      input: input,
       render: render,
+      asset: asset,
+      game: game,
     },
   };
+  // }));
 
   return engineInterface;
 
