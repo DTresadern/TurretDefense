@@ -39,7 +39,7 @@ class SpriteRender {
     this.#ctx.setTransform(1, 0, 0, 1.0, 0, 0);
     this.#ctx.globalAlpha = 1.0;
     this.#ctx.globalCompositeOperation = 'source-over';
-    this.#ctx.fillStyle = '#202020';
+    this.#ctx.fillStyle = '#101010';
     this.#ctx.fillRect(0, 0, this.#canvas.width, this.#canvas.height);
 
     for(const obj of this.#drawList) {
@@ -48,7 +48,8 @@ class SpriteRender {
         break;
       }
 
-      this.#ctx.setTransform(1.0, 0, 0, 1.0, this.#canvas.width/2 + obj.x + (30*fa), this.#canvas.height/2 + obj.y - (100*fa));
+      // this.#ctx.setTransform(1.0, 0, 0, 1.0, this.#canvas.width/2 + obj.x + (obj.velocity.x*fa), this.#canvas.height/2 + obj.y + (obj.velocity.y*fa));
+      this.#ctx.setTransform(1.0, 0, 0, 1.0, this.#canvas.width/2 + obj.x, this.#canvas.height/2 + obj.y);
       this.#ctx.fillStyle = '#ff0000';
 
       // drawimg img sourcex sourcey sourcewidth sourceheight destx desty destwidth destheight
@@ -61,10 +62,10 @@ class SpriteRender {
         0,
         64,
         64,
-        -32,
-        -32,
-        64,
-        64
+        -16,
+        -16,
+        32,
+        32
       );
 
       // interpolation debugging dot

@@ -50,24 +50,45 @@ export const testObject = classFactory.register(
 
 export const Moveable = classFactory.register(
   class Moveable extends TDObject {
+    lifespan = 3;
+    initialLifespan = 3;
+    velocity = {x: 0, y: 0, z: 0};
+    #acceleration = {x: 0, y: 0, z: 0};
+    #rotation = 0;
+    #bounce = 0;
+    #slide = 0;
 
+    constructor() {
+      super();
+      this.velocity.x = (Math.random()*2 - 1) * 150;
+      this.velocity.y = (Math.random()*2 - 1) * 150;
+    }
+
+    fixedProcess(dt) {
+      super.fixedProcess(dt);
+      // console.log(`fixedProcess on ${this.id} lifespan=${this.lifespan}`);
+      this.x += this.velocity.x * dt;
+      this.y += this.velocity.y * dt;
+    }
   }
 );
 
 export const Enemy = classFactory.register(
   class Enemy extends Moveable {
-
-  }
-);
-
-export const Particle = classFactory.register(
-  class Particle extends Moveable {
-
+    // #moveTarget = null;
+    // #attackTarget = null;
   }
 );
 
 export const Projectile = classFactory.register(
   class Projectile extends Moveable {
+    // #lifespan = 1.0;
+    // #speed = 100;
+  }
+);
+
+export const Particle = classFactory.register(
+  class Particle extends Moveable {
 
   }
 );

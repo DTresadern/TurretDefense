@@ -45,7 +45,7 @@ class TurretDefenseGame {
     switch(name) {
       case 'testTimer':
         // console.log(`timer '${name}' triggered`);
-        BaseClass.spawn('testObject');
+        BaseClass.spawn('Moveable');
     }
   }
 
@@ -82,7 +82,7 @@ class TurretDefenseGame {
   }
 
   start() {
-    this.setTimer('testTimer', 0.5);
+    this.setTimer('testTimer', 0.1);
   }
 
   init(engineInterface) {
