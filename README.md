@@ -16,7 +16,15 @@ If this experimental project reaches a working and fully featured state (even po
 
 ### Pics
 
+**Some turret models.**
+
 ![image](https://dtresadern.github.io/TurretDefense/images/web/readme_turrets.jpg)
+
+**Current state:**
+
+Glowy things... that move!
+
+![image](https://dtresadern.github.io/TurretDefense/images/web/current_state.jpg)
 
 ### To-Do List
 more for my reference than anything else.
